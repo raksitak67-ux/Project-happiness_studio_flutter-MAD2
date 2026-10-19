@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import '../models/nail_design.dart';
 
@@ -22,19 +23,28 @@ class NailCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            design.imageUrl,
-            height: 180,
+          // แสดงรูปภาพลายเล็บจาก assets/images/
+          Image.asset(
+            design.imagePath,
             width: double.infinity,
+            height: 180,
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
-              height: 180,
-              width: double.infinity,
-              color: const Color(0xFFF8DCE8),
-              alignment: Alignment.center,
-              child: const Icon(Icons.image_not_supported_outlined, size: 48),
-            ),
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                width: double.infinity,
+                height: 180,
+                color: const Color(0xFFF8DCE8),
+                alignment: Alignment.center,
+                child: const Icon(
+                  Icons.image_not_supported_outlined,
+                  size: 48,
+                  color: Colors.grey,
+                ),
+              );
+            },
           ),
+
+          // แสดงรายละเอียดลายเล็บ
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -48,12 +58,19 @@ class NailCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 5),
-                Text(design.description),
-                const SizedBox(height: 8),
+
                 Text(
-                  'ราคา ${design.price.toStringAsFixed(0)} บาท • ${design.durationMinutes} นาที',
+                  design.description,
+                ),
+                const SizedBox(height: 8),
+
+                Text(
+                  'ราคา ${design.price.toStringAsFixed(0)} บาท '
+                  '• ${design.durationMinutes} นาที',
                 ),
                 const SizedBox(height: 12),
+
+                // แสดงปุ่มเฉพาะเมื่อมีการกำหนด onTap
                 if (onTap != null)
                   SizedBox(
                     width: double.infinity,
