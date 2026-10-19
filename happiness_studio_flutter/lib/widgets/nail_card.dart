@@ -27,7 +27,7 @@ class NailCard extends StatelessWidget {
             height: 180,
             width: double.infinity,
             fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => Container(
+            errorBuilder: (context, error, stackTrace) => Container(
               height: 180,
               width: double.infinity,
               color: const Color(0xFFF8DCE8),
@@ -42,19 +42,25 @@ class NailCard extends StatelessWidget {
               children: [
                 Text(
                   design.name,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 5),
                 Text(design.description),
                 const SizedBox(height: 8),
                 Text(
-                  'เริ่มต้น ${design.startingPrice.toStringAsFixed(0)} บาท • ${design.durationMinutes} นาที',
+                  'ราคา ${design.price.toStringAsFixed(0)} บาท • ${design.durationMinutes} นาที',
                 ),
                 const SizedBox(height: 12),
                 if (onTap != null)
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(onPressed: onTap, child: Text(actionLabel)),
+                    child: ElevatedButton(
+                      onPressed: onTap,
+                      child: Text(actionLabel),
+                    ),
                   ),
               ],
             ),

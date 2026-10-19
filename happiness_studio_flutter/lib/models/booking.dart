@@ -12,6 +12,12 @@ class Booking {
   final String refundStatus;
   final String createdAt;
 
+  // รายละเอียดการทำเล็บเพิ่มเติม
+  final String nailShape;
+  final bool usePvc;
+  final String accessoryLevel;
+  final String details;
+
   const Booking({
     this.id,
     required this.customerEmail,
@@ -25,35 +31,47 @@ class Booking {
     this.slipPath,
     this.refundStatus = 'ไม่เกี่ยวข้อง',
     required this.createdAt,
+    this.nailShape = 'ไม่ระบุ',
+    this.usePvc = false,
+    this.accessoryLevel = 'none',
+    this.details = '',
   });
 
   Map<String, Object?> toMap() => {
-        'id': id,
-        'customerEmail': customerEmail,
-        'designName': designName,
-        'date': date,
-        'time': time,
-        'totalPrice': totalPrice,
-        'deposit': deposit,
-        'status': status,
-        'referencePath': referencePath,
-        'slipPath': slipPath,
-        'refundStatus': refundStatus,
-        'createdAt': createdAt,
-      };
+    'id': id,
+    'customerEmail': customerEmail,
+    'designName': designName,
+    'date': date,
+    'time': time,
+    'totalPrice': totalPrice,
+    'deposit': deposit,
+    'status': status,
+    'referencePath': referencePath,
+    'slipPath': slipPath,
+    'refundStatus': refundStatus,
+    'createdAt': createdAt,
+    'nailShape': nailShape,
+    'usePvc': usePvc ? 1 : 0,
+    'accessoryLevel': accessoryLevel,
+    'details': details,
+  };
 
   factory Booking.fromMap(Map<String, Object?> map) => Booking(
-        id: map['id'] as int?,
-        customerEmail: map['customerEmail'] as String,
-        designName: map['designName'] as String,
-        date: map['date'] as String,
-        time: map['time'] as String,
-        totalPrice: (map['totalPrice'] as num).toDouble(),
-        deposit: (map['deposit'] as num).toDouble(),
-        status: map['status'] as String,
-        referencePath: map['referencePath'] as String?,
-        slipPath: map['slipPath'] as String?,
-        refundStatus: (map['refundStatus'] as String?) ?? 'ไม่เกี่ยวข้อง',
-        createdAt: map['createdAt'] as String,
-      );
+    id: map['id'] as int?,
+    customerEmail: map['customerEmail'] as String,
+    designName: map['designName'] as String,
+    date: map['date'] as String,
+    time: map['time'] as String,
+    totalPrice: (map['totalPrice'] as num).toDouble(),
+    deposit: (map['deposit'] as num).toDouble(),
+    status: map['status'] as String,
+    referencePath: map['referencePath'] as String?,
+    slipPath: map['slipPath'] as String?,
+    refundStatus: (map['refundStatus'] as String?) ?? 'ไม่เกี่ยวข้อง',
+    createdAt: map['createdAt'] as String,
+    nailShape: map['nailShape'] as String? ?? 'ไม่ระบุ',
+    usePvc: (map['usePvc'] as num?)?.toInt() == 1,
+    accessoryLevel: map['accessoryLevel'] as String? ?? 'none',
+    details: map['details'] as String? ?? '',
+  );
 }

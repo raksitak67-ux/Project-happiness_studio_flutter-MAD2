@@ -23,7 +23,9 @@ class ReferenceImage extends StatelessWidget {
         OutlinedButton.icon(
           onPressed: onPick,
           icon: const Icon(Icons.add_photo_alternate_outlined),
-          label: Text(hasImage ? 'เปลี่ยนรูป Reference' : 'เลือกรูป Reference จากเครื่อง'),
+          label: Text(
+            hasImage ? 'เปลี่ยนรูป Reference' : 'เลือกรูป Reference จากเครื่อง',
+          ),
         ),
         if (hasImage) ...[
           const SizedBox(height: 10),
@@ -34,7 +36,7 @@ class ReferenceImage extends StatelessWidget {
               height: height,
               width: double.infinity,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
+              errorBuilder: (context, error, stackTrace) => Container(
                 height: height,
                 color: const Color(0xFFF8DCE8),
                 alignment: Alignment.center,

@@ -15,8 +15,11 @@ class PriceEstimate {
     required this.accessorySuggestion,
   });
 
+  // คำนวณราคารวม
   double get total => basePrice + pvcPrice + extraPrice + accessoryPrice;
-  double get deposit => total * 0.30;
+
+  // เงินมัดจำคงที่ 100 บาท
+  double get deposit => 100.0;
 
   factory PriceEstimate.calculate({
     required double basePrice,
@@ -24,20 +27,41 @@ class PriceEstimate {
     required String nailShape,
     required String style,
     required String details,
+    String accessoryLevel = 'none',
   }) {
+    // ค่า PVC
     final pvc = usePvc ? 200.0 : 0.0;
-    final extra = details.trim().isEmpty ? 0.0 : 50.0;
-    final accessory = style == 'กลิตเตอร์' ? 80.0 : 50.0;
-    final suggestion = nailShape == 'Almond'
+
+    // รายละเอียดเพิ่มเติมไม่มีค่าใช้จ่าย
+    const extra = 0.0;
+
+    // ค่าอะไหล่ตามตัวเลือกของลูกค้า
+    double accessory;
+
+    switch (accessoryLevel) {
+      case 'few':
+        accessory = 50.0;
+        break;
+      case 'many':
+        accessory = 100.0;
+        break;
+      default:
+        accessory = 0.0;
+    }
+
+    // คำแนะนำเกี่ยวกับอะไหล่
+    final suggestion = accessoryLevel == 'none'
+        ? 'ไม่เลือกใช้อะไหล่เพิ่มเติม'
+        : nailShape == 'Almond'
         ? 'แนะนำอะไหล่คริสตัลขนาดเล็ก หรือหัวใจสีเงิน'
         : 'แนะนำอะไหล่มุกหรือเพชรเม็ดเล็ก';
+
     return PriceEstimate(
       basePrice: basePrice,
       pvcPrice: pvc,
       extraPrice: extra,
       accessoryPrice: accessory,
-      recommendation:
-          'แนะนำทรง $nailShape กับสไตล์$style โดยปรับโทนสีให้เข้ากับ Reference ของคุณ',
+      recommendation: 'แนะนำทรง $nailShape กับสไตล์ $style',
       accessorySuggestion: suggestion,
     );
   }
